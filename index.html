@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Elite Tech Resume Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script>
+        // Configures Tailwind to track classes on the root element
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+    <style>
+        .resume-body { font-family: 'Source Sans Pro', sans-serif; }
+        .resume-name { font-family: 'Playfair Display', serif; }
+        .theme-transition { transition: background-color 0.3s ease, border-color 0.3s ease, text-color 0.3s ease; }
+    </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col justify-between theme-transition">
+
+    <div id="welcomeScreen" class="fixed inset-0 bg-slate-900 z-[100] flex flex-col justify-between p-6 text-center select-none">
+        <div></div>
+
+        <div class="max-w-2xl space-y-6 mx-auto">
+            <div class="inline-block bg-blue-600/10 text-blue-400 border border-blue-500/20 text-xs font-mono uppercase tracking-widest px-3 py-1 rounded-full mb-2">
+                ⚡ Streamlined ATS-Optimized Workspace
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight">
+                Welcome to <span class="text-blue-500">VibeResume</span>
+            </h1>
+            <p class="text-slate-400 text-lg md:text-xl font-light leading-relaxed max-w-md mx-auto">
+                Just drop your information into the intuitive data fields and pull a beautifully engineered tech industry resume instantly.
+            </p>
+            <div class="pt-4">
+                <button id="getStartedBtn" class="bg-blue-600 hover:bg-blue-700 text-white text-base font-bold py-3.5 px-8 rounded-xl shadow-lg shadow-blue-600/20 transform hover:-translate-y-0.5 active:translate-y-0 transition duration-150">
+                    Continue to Builder →
+                </button>
+            </div>
+        </div>
+
+        <footer class="text-slate-500 text-xs flex flex-col md:flex-row justify-between items-center max-w-[1600px] w-full mx-auto gap-3 border-t border-slate-800/60 pt-4">
+            <div>
+                © 2026 <span class="text-slate-400 font-semibold">Prem Shah</span>. All rights reserved.
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/PremShah-22" target="_blank" class="hover:text-slate-300 transition flex items-center gap-1">
+                    🐙 GitHub: PremShah-22
+                </a>
+                <a href="https://linkedin.com/in/prem-shah-848044389" target="_blank" class="hover:text-slate-300 transition flex items-center gap-1">
+                    🔗 LinkedIn: prem-shah-848044389
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <div id="mainWorkspace" class="hidden flex-col min-h-screen justify-between">
+        <header class="bg-slate-900 text-white py-4 px-6 shadow-md flex justify-between items-center sticky top-0 z-50">
+            <h1 class="text-xl font-bold tracking-wide flex items-center gap-2">
+                <span>⚡</span> VibeResume <span class="text-xs bg-blue-600 px-2 py-0.5 rounded text-blue-100">Premium Tech Template</span>
+            </h1>
+            <div class="flex items-center gap-3">
+                <button id="themeToggleBtn" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg py-2 px-4 text-xs font-semibold tracking-wide text-slate-200 transition duration-200" title="Toggle Theme Mode">
+                    🌓 Toggle Mode
+                </button>
+                <button id="downloadBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg shadow transition duration-200 flex items-center gap-2">
+                    📥 Export One-Page PDF
+                </button>
+            </div>
+        </header>
+
+        <main class="max-w-[1700px] w-full mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 h-[calc(100vh-140px)]">
+            
+            <section class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-inner border border-slate-200 dark:border-slate-800 overflow-y-auto space-y-6 theme-transition">
+                
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-1">Personal Details</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Full Name</label>
+                        <input type="text" id="inName" placeholder="e.g. JOHN DOE" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none uppercase font-bold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Phone Number</label>
+                        <input type="text" id="inPhone" placeholder="e.g. +91 9876543210" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Email Address</label>
+                        <input type="email" id="inEmail" placeholder="e.g. johndoe@gmail.com" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">LinkedIn URL</label>
+                        <input type="text" id="inLinkedin" placeholder="e.g. linkedin.com/in/johndoe" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">GitHub URL</label>
+                        <input type="text" id="inGithub" placeholder="e.g. github.com/johndoe" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none">
+                    </div>
+                </div>
+
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-1 pt-2">Education</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">University / Institute & Location</label>
+                        <input type="text" id="inEduInst" placeholder="e.g. ABC University | City, State" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Degree Line</label>
+                        <input type="text" id="inEduDegree" placeholder="e.g. Bachelor of Technology in Computer Science and Engineering" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Timeline & CGPA</label>
+                        <input type="text" id="inEduMeta" placeholder="e.g. June 2022 — May 2026 | CGPA: 9.00" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Relevant Coursework</label>
+                        <input type="text" id="inEduCourse" placeholder="e.g. Data Structures, Algorithms, Operating Systems, DBMS" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none">
+                    </div>
+                </div>
+
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-1 pt-2">Work Experience</h2>
+                <div class="space-y-3 text-sm">
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="inExpCompany" class="border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white font-semibold" placeholder="Company Name (e.g. Google)">
+                        <input type="text" id="inExpTime" class="border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white text-right" placeholder="Timeline (e.g. May 2025 — June 2025)">
+                        <input type="text" id="inExpTitle" class="border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white italic" placeholder="Role Title (e.g. Software Engineer Intern)">
+                        <input type="text" id="inExpLoc" class="border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white text-right" placeholder="Location (e.g. Bangalore, Karnataka)">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Bullets (One point per line - Use **word** for bold metrics)</label>
+                        <textarea id="inExpBullets" rows="4" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent font-mono text-xs text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none" placeholder="Designed and optimized infrastructure scaling handling **10K+ requests/sec**, reducing latency benchmarks by **40%**..."></textarea>
+                    </div>
+                    <div>
+                        <input type="text" id="inExpTech" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white" placeholder="Tech Stack (e.g. Python, C++, Go, Docker, Kubernetes)">
+                    </div>
+                </div>
+
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-1 pt-2">Coding Profiles (One profile per line)</h2>
+                <div>
+                    <textarea id="inProfiles" rows="4" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent font-mono text-xs text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none" placeholder="e.g. **LeetCode:** Guardian Rank (Rating 2200+, Solved **800+** problems)&#10;**Codeforces:** Expert (Rating 1650+)"></textarea>
+                </div>
+
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-1 pt-2">Core Project</h2>
+                <div class="space-y-3 text-sm">
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" id="inProjTitle" class="border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white font-semibold" placeholder="Project Title (e.g. Distributed Chat App)">
+                        <input type="text" id="inProjTime" class="border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white text-right" placeholder="Timeline (e.g. March 2025)">
+                        <div class="col-span-2">
+                            <input type="text" id="inProjTech" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white italic" placeholder="Tech Used (e.g. Node.js, WebSockets, Redis, Next.js)">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Bullets (One point per line)</label>
+                        <textarea id="inProjBullets" rows="3" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent font-mono text-xs text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none" placeholder="Architected a real-time messaging workspace utilizing **WebSockets** and horizontal scaling with **Redis Pub/Sub**..."></textarea>
+                    </div>
+                </div>
+
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-1 pt-2">Technical Skills (Categories & Skills)</h2>
+                <div class="space-y-2 text-xs font-mono">
+                    <input type="text" id="inSkill1" placeholder="e.g. **Languages:** C++, Python, Java, JavaScript, TypeScript, Go" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white">
+                    <input type="text" id="inSkill2" placeholder="e.g. **Frameworks & Backend:** Node.js, Express, React, Next.js, Django" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white">
+                    <input type="text" id="inSkill3" placeholder="e.g. **Databases & DevOps:** SQL, MongoDB, Redis, Docker, AWS, Git" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white">
+                    <input type="text" id="inSkill4" placeholder="e.g. **System Architectures:** REST APIs, GraphQL, WebSockets, gRPC" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent text-slate-900 dark:text-white">
+                </div>
+
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-1 pt-2">Achievements (One point per line)</h2>
+                <div>
+                    <textarea id="inAchievements" rows="4" class="w-full border border-slate-200 dark:border-slate-700 rounded p-2 bg-transparent font-mono text-xs text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none" placeholder="e.g. Secured **Top 5** placement out of 500+ competing engineers at National Level Hackathon x..."></textarea>
+                </div>
+            </section>
+
+            <section class="bg-slate-400 dark:bg-slate-800 p-2 rounded-xl flex justify-center overflow-y-auto items-start shadow-inner theme-transition">
+                <div id="resume-sheet" class="bg-white w-[794px] min-h-[1123px] max-h-[1123px] p-9 text-slate-900 tracking-normal leading-normal resume-body flex flex-col justify-between overflow-hidden select-none relative shadow-2xl">
+                    
+                    <div class="space-y-3.5">
+                        <div class="text-center space-y-1">
+                            <h1 id="pName" class="text-3xl font-normal tracking-wide text-black resume-name uppercase"></h1>
+                            <div class="flex justify-center items-center gap-4 text-[11px] text-slate-800">
+                                <span id="pPhone" class="flex items-center gap-1"></span>
+                                <span id="pEmail" class="flex items-center gap-1"></span>
+                                <span id="pLinkedin" class="flex items-center gap-1"></span>
+                                <span id="pGithub" class="flex items-center gap-1"></span>
+                            </div>
+                        </div>
+
+                        <div id="secEdu" class="hidden">
+                            <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-400 pb-0.5 mb-1.5">Education</h2>
+                            <div class="text-[11.5px] space-y-1">
+                                <div class="flex justify-between font-bold text-slate-900">
+                                    <span id="pEduInst"></span>
+                                    <span id="pEduMeta" class="font-normal text-right"></span>
+                                </div>
+                                <div id="pEduDegree" class="italic text-slate-800"></div>
+                                <div id="rowCourse" class="text-[11px] text-slate-700 font-normal hidden">
+                                    <strong>Coursework:</strong> <span id="pEduCourse"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="secExp" class="hidden">
+                            <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-400 pb-0.5 mb-1.5">Work Experience</h2>
+                            <div class="text-[11.5px] space-y-1">
+                                <div class="flex justify-between font-bold text-slate-900">
+                                    <span id="pExpCompany"></span>
+                                    <span id="pExpTime" class="font-normal text-right"></span>
+                                </div>
+                                <div class="flex justify-between text-slate-800 italic text-[11px]">
+                                    <span id="pExpTitle"></span>
+                                    <span id="pExpLoc" class="not-italic font-normal text-slate-600"></span>
+                                </div>
+                                <ul id="pExpBullets" class="list-disc pl-4 text-[11px] space-y-0.5 text-slate-800 text-justify"></ul>
+                                <div id="rowExpTech" class="text-[11px] text-slate-700 pt-0.5 hidden">
+                                    <strong>Tech Stack:</strong> <span id="pExpTech" class="font-mono text-[10.5px]"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="secProfiles" class="hidden">
+                            <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-400 pb-0.5 mb-1.5">Coding Profiles</h2>
+                            <ul id="pProfiles" class="list-none text-[11px] space-y-0.5 text-slate-800"></ul>
+                        </div>
+
+                        <div id="secProj" class="hidden">
+                            <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-400 pb-0.5 mb-1.5">Projects</h2>
+                            <div class="text-[11.5px] space-y-1">
+                                <div class="flex justify-between font-bold text-slate-900">
+                                    <span><span id="pProjTitle"></span> <span id="wrapperProjTech" class="hidden">| <span id="pProjTech" class="font-normal font-mono text-[10.5px] text-slate-700"></span></span></span>
+                                    <span id="pProjTime" class="font-normal text-right"></span>
+                                </div>
+                                <ul id="pProjBullets" class="list-disc pl-4 text-[11px] space-y-0.5 text-slate-800 text-justify"></ul>
+                            </div>
+                        </div>
+
+                        <div id="secSkills" class="hidden">
+                            <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-400 pb-0.5 mb-1.5">Technical Skills</h2>
+                            <div id="pSkills" class="text-[11px] space-y-0.5 text-slate-800"></div>
+                        </div>
+
+                        <div id="secAch" class="hidden">
+                            <h2 class="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-400 pb-0.5 mb-1.5">Achievements</h2>
+                            <ul id="pAchievements" class="list-disc pl-4 text-[11px] space-y-0.5 text-slate-800"></ul>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="bg-slate-900 text-slate-400 text-xs py-4 px-6 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-3">
+            <div>
+                © 2026 <span class="text-slate-200 font-semibold">Prem Shah</span>. All rights reserved.
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/PremShah-22" target="_blank" class="hover:text-white transition flex items-center gap-1">
+                    🐙 GitHub: PremShah-22
+                </a>
+                <a href="https://linkedin.com/in/prem-shah-848044389" target="_blank" class="hover:text-white transition flex items-center gap-1">
+                    🔗 LinkedIn: prem-shah-848044389
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Transition Screen Controller Logic
+        document.getElementById('getStartedBtn').addEventListener('click', () => {
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            const mainWorkspace = document.getElementById('mainWorkspace');
+            mainWorkspace.classList.remove('hidden');
+            mainWorkspace.classList.add('flex');
+        });
+
+        // Fixed Theme Architecture: Toggles class directly on root documentElement
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+
+        function parseBold(text) {
+            return text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-black">$1</strong>');
+        }
+
+        const standardBindings = [
+            { input: 'inName', preview: 'pName' },
+            { input: 'inPhone', preview: 'pPhone', prefix: '📱 ' },
+            { input: 'inEmail', preview: 'pEmail', prefix: '✉️ ' },
+            { input: 'inLinkedin', preview: 'pLinkedin', prefix: '🔗 ' },
+            { input: 'inGithub', preview: 'pGithub', prefix: '🐙 ' },
+            { input: 'inEduInst', preview: 'pEduInst', section: 'secEdu' },
+            { input: 'inEduDegree', preview: 'pEduDegree', section: 'secEdu' },
+            { input: 'inEduMeta', preview: 'pEduMeta', section: 'secEdu' },
+            { input: 'inEduCourse', preview: 'pEduCourse', wrapper: 'rowCourse' },
+            { input: 'inExpCompany', preview: 'pExpCompany', section: 'secExp' },
+            { input: 'inExpTime', preview: 'pExpTime', section: 'secExp' },
+            { input: 'inExpTitle', preview: 'pExpTitle', section: 'secExp' },
+            { input: 'inExpLoc', preview: 'pExpLoc', section: 'secExp' },
+            { input: 'inExpTech', preview: 'pExpTech', wrapper: 'rowExpTech' },
+            { input: 'inProjTitle', preview: 'pProjTitle', section: 'secProj' },
+            { input: 'inProjTech', preview: 'pProjTech', wrapper: 'wrapperProjTech' },
+            { input: 'inProjTime', preview: 'pProjTime', section: 'secProj' }
+        ];
+
+        standardBindings.forEach(bind => {
+            const el = document.getElementById(bind.input);
+            el.addEventListener('input', () => {
+                const target = document.getElementById(bind.preview);
+                
+                if (el.value.trim() !== "") {
+                    target.innerHTML = (bind.prefix || '') + el.value;
+                    if (bind.section) document.getElementById(bind.section).classList.remove('hidden');
+                    if (bind.wrapper) document.getElementById(bind.wrapper).classList.remove('hidden');
+                } else {
+                    target.innerHTML = "";
+                    checkSectionVisibility();
+                }
+            });
+        });
+
+        function checkSectionVisibility() {
+            if (!document.getElementById('inEduInst').value.trim() && !document.getElementById('inEduDegree').value.trim()) {
+                document.getElementById('secEdu').classList.add('hidden');
+            }
+            if (!document.getElementById('inEduCourse').value.trim()) {
+                document.getElementById('rowCourse').classList.add('hidden');
+            }
+            if (!document.getElementById('inExpCompany').value.trim() && !document.getElementById('inExpTitle').value.trim() && !document.getElementById('inExpBullets').value.trim()) {
+                document.getElementById('secExp').classList.add('hidden');
+            }
+            if (!document.getElementById('inExpTech').value.trim()) {
+                document.getElementById('rowExpTech').classList.add('hidden');
+            }
+            if (!document.getElementById('inProjTitle').value.trim() && !document.getElementById('inProjBullets').value.trim()) {
+                document.getElementById('secProj').classList.add('hidden');
+            }
+            if (!document.getElementById('inProjTech').value.trim()) {
+                document.getElementById('wrapperProjTech').classList.add('hidden');
+            }
+        }
+
+        function renderBulletLists() {
+            const expVal = document.getElementById('inExpBullets').value.trim();
+            const expContainer = document.getElementById('pExpBullets');
+            expContainer.innerHTML = '';
+            if (expVal) {
+                document.getElementById('secExp').classList.remove('hidden');
+                expVal.split('\n').filter(l => l.trim()).forEach(line => {
+                    const li = document.createElement('li');
+                    li.innerHTML = parseBold(line);
+                    expContainer.appendChild(li);
+                });
+            }
+
+            const projVal = document.getElementById('inProjBullets').value.trim();
+            const projContainer = document.getElementById('pProjBullets');
+            projContainer.innerHTML = '';
+            if (projVal) {
+                document.getElementById('secProj').classList.remove('hidden');
+                projVal.split('\n').filter(l => l.trim()).forEach(line => {
+                    const li = document.createElement('li');
+                    li.innerHTML = parseBold(line);
+                    projContainer.appendChild(li);
+                });
+            }
+
+            const profileVal = document.getElementById('inProfiles').value.trim();
+            const profileContainer = document.getElementById('pProfiles');
+            profileContainer.innerHTML = '';
+            if (profileVal) {
+                document.getElementById('secProfiles').classList.remove('hidden');
+                profileVal.split('\n').filter(l => l.trim()).forEach(line => {
+                    const li = document.createElement('li');
+                    li.className = "list-none before:content-['•'] before:mr-2 text-[11px]";
+                    li.innerHTML = parseBold(line);
+                    profileContainer.appendChild(li);
+                });
+            } else {
+                document.getElementById('secProfiles').classList.add('hidden');
+            }
+
+            const achVal = document.getElementById('inAchievements').value.trim();
+            const achContainer = document.getElementById('pAchievements');
+            achContainer.innerHTML = '';
+            if (achVal) {
+                document.getElementById('secAch').classList.remove('hidden');
+                achVal.split('\n').filter(l => l.trim()).forEach(line => {
+                    const li = document.createElement('li');
+                    li.innerHTML = parseBold(line);
+                    achContainer.appendChild(li);
+                });
+            } else {
+                document.getElementById('secAch').classList.add('hidden');
+            }
+
+            const skillsContainer = document.getElementById('pSkills');
+            skillsContainer.innerHTML = '';
+            let totalSkills = 0;
+            ['inSkill1', 'inSkill2', 'inSkill3', 'inSkill4'].forEach(id => {
+                const val = document.getElementById(id).value.trim();
+                if(val){
+                    totalSkills++;
+                    const div = document.createElement('div');
+                    div.innerHTML = parseBold(val);
+                    skillsContainer.appendChild(div);
+                }
+            });
+            if (totalSkills > 0) {
+                document.getElementById('secSkills').classList.remove('hidden');
+            } else {
+                document.getElementById('secSkills').classList.add('hidden');
+            }
+            
+            checkSectionVisibility();
+        }
+
+        ['inExpBullets', 'inProjBullets', 'inProfiles', 'inAchievements', 'inSkill1', 'inSkill2', 'inSkill3', 'inSkill4'].forEach(id => {
+            document.getElementById(id).addEventListener('input', renderBulletLists);
+        });
+
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const element = document.getElementById('resume-sheet');
+            const name = document.getElementById('inName').value.trim().replace(/\s+/g, '_') || 'Resume';
+            
+            const opt = {
+                margin:       0,
+                filename:     `${name}_Resume.pdf`,
+                image:        { type: 'jpeg', quality: 1.0 },
+                html2canvas:  { scale: 3, useCORS: true, letterRendering: true, logging: false },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        });
+    </script>
+</body>
+</html>
